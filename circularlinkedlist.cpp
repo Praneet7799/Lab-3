@@ -42,8 +42,9 @@ void LinkedList::insert(int x) {
             //Checks if the list is empty or not and changes head or attaches the new node to the list accordingly
 	if (head == NULL) {
 		head = temp;
-	} else {
+	} else {//attaches the new last element
 		tail->next = temp;
+		//attaches last element back to the head making it a circular linked list
 		temp->next=head;
 	}
 	//changes the tail and increments the number of elements by one
@@ -59,13 +60,14 @@ if (i > n)
 	//adds the element to the start,assigns the next of temp to the first element and changes the head to point at the new start
 else if (i == 0) 
   {Node* temp = new Node;
+   //adds new head
 		temp->data = x;
 		temp->next = head;
 		head = temp;
 		++n;
 	} 
 else if (i == n) 
-  {//adds the node at the end of the list, identical to insert function
+  {//adds the node at the end of the list, uses the insert function
   	
   	insert(x);
 	 
@@ -81,7 +83,9 @@ else if (i == n)
 			locate = locate->next;
 		}
                         //the new node points to the node which the (i-1)th node was pointing to, which in turn points to the new node 
-		temp->next = locate->next;
+		//attaches temp to the next node in the list
+	        temp->next = locate->next;
+	  //attaches the last second element to the new node
 		locate->next = temp;
 		//increases the elements by one, as the node is successfully added
 		++n;
@@ -96,6 +100,7 @@ void LinkedList::deletelast()
 		}
 		//tail points to the new end, and the previous one is removed from the list
 		tail = locate;
+ //the circular link is re-established
 		locate->next = head;
 		--n;
 }
@@ -115,7 +120,7 @@ void LinkedList::deleteAt(int i) {
 		for (int j=0; j<i-1; ++j) {
 			locate = locate->next;
 		}
-
+                //locate is made to point to the second element to locate in the list
 		locate->next = (locate->next)->next;
 		--n;
 	}
@@ -131,13 +136,15 @@ void LinkedList::display() {
 		while (temp != tail) {
 			cout << temp->data <<" -> ";
 			temp = temp->next;
-		}cout<<tail->data;
+		}//prints the tail
+		cout<<tail->data;
 	}
 }
 
 int LinkedList::countElements()
 {int j;
 j=n;
+ //puts the value of n in the variable j and returns it's value
 	return j;}
 
 
