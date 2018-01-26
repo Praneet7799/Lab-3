@@ -63,6 +63,7 @@ if (i > n)
 else if (i == 0) 
   {Node* temp = new Node;
 		temp->data = x;
+   //adds the element to the start of the list and makes the previous null, changes the value of head
 		temp->next = head;
 		temp->prev=NULL;
 		head = temp;
@@ -85,7 +86,8 @@ else if (i == n)
 			locate = locate->next;
 		}
                         //the new node points to the node which the (i-1)th node was pointing to, which in turn points to the new node 
-		temp->next = locate->next;
+	//temp is inserteed after locate with double link	
+	  temp->next = locate->next;
 		locate->next->prev=temp;
 		locate->next = temp;
 		temp->prev=locate;
@@ -97,6 +99,7 @@ else if (i == n)
 void LinkedList::deletelast()
 {      Node* temp;
        temp=tail;
+ //temp replaces tail and is attached back to the head
        tail=temp->prev;
        tail->next=NULL;
        delete temp;
@@ -110,8 +113,11 @@ void LinkedList::deleteAt(int i) {
 		//changes the head so that the first element is no longer in the list
 		Node*temp;
 		temp=head;
+		//head shifts to next
 		head = head->next;
+		//the previous is null-ed
 		head->prev=NULL;
+		//deletes the temp
 		delete temp;
 		--n;
 	} else if (i == n-1) {
@@ -120,11 +126,14 @@ void LinkedList::deleteAt(int i) {
 	} else {    //locate pointer locates the (i-1)th element and makes it point to the (i+1)th element hence detaching the ith element from the list
 		Node* locate = head;
 		Node* temp;
+		//locate transverses the list to find the element before the one to be deleted
 		for (int j=0; j<i-2; ++j) {
 			locate = locate->next;
 		}
         temp=locate->next;
+		//new node points to the second element after it
 		locate->next = (locate->next)->next;
+		//it points back to the element before it removing the last one 
 		locate->next->prev=locate;
 		delete temp;
 		--n;
@@ -138,10 +147,11 @@ void LinkedList::display() {
 		Node* temp = new Node;
 		temp = head;
 		//temp pointer transverses through the list printing all elements
-		while (temp != NULL) {
+		while (temp != NULL) {//prints all data elements
 			cout << temp->data<<" -> ";
 			temp = temp->next;
 		}cout<<endl;
+		//delets temp pointer
 		delete temp;
 	}
 }
@@ -149,7 +159,7 @@ void LinkedList::display() {
 void LinkedList::reversedisplay() {
 	Node* temp = new Node;
 		temp = tail;
-		//temp pointer transverses through the list printing all elements
+		//temp pointer transverses through the list printing all elements from tail to head in reverse
 		while (temp != NULL) {
 			cout << temp->data <<" -> ";
 			temp = temp->prev;}
